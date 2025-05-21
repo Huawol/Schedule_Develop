@@ -7,6 +7,7 @@ import com.example.tododevelop.users.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -39,5 +40,15 @@ public class UserService {
         }
         Users findUser = optionalUsers.get();
         return new UsersResponseDto(findUser.getUserName(), findUser.getUserEmail());
+    }
+
+    // 수정(비밀번호)
+    @Transactional
+    public void updatePassword(Long id, String oldPassword, String newPassword) {
+        Users finduser = usersRepository.findByIdOrElseThrow(id);
+        if(!finduser.getUserPassword().equals(oldPassword)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+        finduser.updatePassword(newPassword);
     }
 }

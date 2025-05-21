@@ -31,4 +31,7 @@ public class Users extends BaseEntity {
     }
 
 
+    public void updatePassword(String password) {
+        this.userPassword = password;
+    }
 }
