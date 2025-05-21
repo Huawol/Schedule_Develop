@@ -24,13 +24,13 @@ public class Todo extends BaseEntity {
     @JoinColumn(name = "users_id")
     private Users users;
 
-//    public Todo() {
-//    }
-//
-//    public Todo(String title, String contents) {
-//        this.title = title;
-//        this.contents = contents;
-//    }
+    public Todo() {
+    }
+
+    public Todo(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
 
 
 }
