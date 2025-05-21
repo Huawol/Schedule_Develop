@@ -36,12 +36,20 @@ public class UsersController {
         return new ResponseEntity<>(usersResponseDto, HttpStatus.OK);
     }
 
+    // 비밀번호 수정
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updatePassword(
             @PathVariable Long id,
             @RequestBody UpdatePasswordRequstDto requstDto
     ) {
         userService.updatePassword(id, requstDto.getOldPassword(), requstDto.getNewPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 유저 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -51,4 +51,10 @@ public class UserService {
         }
         finduser.updatePassword(newPassword);
     }
+
+    // 삭제
+    public void delete(Long id) {
+        Users findUser = usersRepository.findByIdOrElseThrow(id);
+        usersRepository.delete(findUser);
+    }
 }
