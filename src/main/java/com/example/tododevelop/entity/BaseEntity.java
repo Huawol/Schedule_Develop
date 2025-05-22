@@ -1,6 +1,7 @@
 package com.example.tododevelop.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -18,8 +19,10 @@ public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    public LocalDateTime createAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public LocalDateTime createAt; // 생성 시간
 
     @LastModifiedDate
-    public LocalDateTime modifiedAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public LocalDateTime modifiedAt; // 수정 시간
 }

@@ -5,6 +5,8 @@ import com.example.tododevelop.users.entity.Users;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Entity
 @Table(name = "todo")
@@ -30,6 +32,10 @@ public class Todo extends BaseEntity {
     public Todo(String title, String contents) {
         this.title = title;
         this.contents = contents;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
 
