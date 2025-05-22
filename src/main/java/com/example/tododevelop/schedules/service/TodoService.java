@@ -8,6 +8,9 @@ import com.example.tododevelop.users.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+
 @Service
 @RequiredArgsConstructor
 public class TodoService {
@@ -31,5 +34,28 @@ public class TodoService {
                 savedTodo.getContents(),
                 savedTodo.getUsers().getUserName()
         );
+    }
+
+    // 게시글 전체 조회 기능
+    public List<TodoResponseDto> findAll() {
+        return todoRepository.findAll()
+                .stream()
+                .map(TodoResponseDto::toDto)
+                .toList();
+    }
+
+    // 게시글 단건 조회
+    public TodoResponseDto findById(Long id) {
+        Todo findTodo = todoRepository.findTodoByOrElseThrow(id);
+        return new TodoResponseDto(
+                findTodo.getId(),
+                findTodo.getTitle(),
+                findTodo.getContents(),
+                findTodo.getUsers().getUserName());
+    }
+
+    public void delete(Long id) {
+        Todo findTodo = todoRepository.findTodoByOrElseThrow(id);
+        todoRepository.delete(findTodo);
     }
 }

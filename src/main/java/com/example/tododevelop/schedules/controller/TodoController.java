@@ -7,10 +7,9 @@ import com.example.tododevelop.schedules.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/todo")
@@ -29,6 +28,28 @@ public class TodoController {
                         requestDto.getUserName() /* post맨에서 회원 생성할때 만든 username이랑 같아야함*/
                 );
         return new ResponseEntity<>(todoResponseDto, HttpStatus.CREATED);
+    }
+
+    // 게시글 전체 조회
+    @GetMapping
+    public ResponseEntity<List<TodoResponseDto>> findAll() {
+        List<TodoResponseDto> todoResponseDtoList = todoService.findAll();
+
+        return new ResponseEntity<>(todoResponseDtoList, HttpStatus.OK);
+    }
+
+    // 게시글 단건 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<TodoResponseDto> findById(@PathVariable Long id) {
+        TodoResponseDto todoResponseDto = todoService.findById(id);
+        return new ResponseEntity<>(todoResponseDto, HttpStatus.OK);
+    }
+
+    // 게시글 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<TodoResponseDto> delete(@PathVariable Long id) {
+        todoService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
