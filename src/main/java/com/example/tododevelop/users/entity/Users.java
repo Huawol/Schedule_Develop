@@ -12,7 +12,7 @@ public class Users extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = false) // 유일해야하기 때문
+    @Column(nullable = false, unique = true) // 유일해야하기 때문
     private String userEmail;
 
     @Column(nullable = false)

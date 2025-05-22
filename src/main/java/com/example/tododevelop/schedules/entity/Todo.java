@@ -39,4 +39,7 @@ public class Todo extends BaseEntity {
     }
 
 
+    public void updateContents(String newContents) {
+        this.contents = newContents;
+    }
 }

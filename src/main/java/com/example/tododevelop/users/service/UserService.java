@@ -1,5 +1,6 @@
 package com.example.tododevelop.users.service;
 
+import com.example.tododevelop.users.dto.LoginRequestDto;
 import com.example.tododevelop.users.dto.SignUpResponseDto;
 import com.example.tododevelop.users.dto.UsersResponseDto;
 import com.example.tododevelop.users.entity.Users;
@@ -21,13 +22,11 @@ public class UserService {
     // 생성
     public SignUpResponseDto signUp(String userName, String userEmail, String userPassword) {
         Users users = new Users(userName, userEmail, userPassword);
+        if (usersRepository.findUsersByUserEmail(userEmail).isPresent()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, " \uD83E\uDEF8 e-mail 중복입니다!!!");
+        }
         Users saveUsers = usersRepository.save(users);
-        return new SignUpResponseDto(
-                saveUsers.getId(),
-                saveUsers.getUserName(),
-                saveUsers.getUserEmail(),
-                saveUsers.getUserPassword()
-        );
+        return new SignUpResponseDto(saveUsers);
     }
 
     // 조회
@@ -39,7 +38,7 @@ public class UserService {
             // postman에서는 throw new를 통해서 메세지 못봄
         }
         Users findUser = optionalUsers.get();
-        return new UsersResponseDto(findUser.getUserName(), findUser.getUserEmail());
+        return new UsersResponseDto(findUser);
     }
 
     // 수정(비밀번호)
@@ -47,7 +46,7 @@ public class UserService {
     public void updatePassword(Long id, String oldPassword, String newPassword) {
         Users finduser = usersRepository.findByIdOrElseThrow(id);
         if(!finduser.getUserPassword().equals(oldPassword)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"\uD83E\uDEF8 비번이 틀려요!!!!");
         }
         finduser.updatePassword(newPassword);
     }
@@ -56,5 +55,10 @@ public class UserService {
     public void delete(Long id) {
         Users findUser = usersRepository.findByIdOrElseThrow(id);
         usersRepository.delete(findUser);
+    }
+
+    // 로그인 인증
+    public void login(LoginRequestDto loginRequestDto) {
+        Optional<Users> userEmail = usersRepository.findUsersByUserEmail(loginRequestDto.getUserEmail());
     }
 }

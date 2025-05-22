@@ -7,11 +7,11 @@ public class CreateTodoRequestDto {
 
     private final String title;
     private final String contents;
-    private final String userName;
+    private final Long userId;
 
-    public CreateTodoRequestDto(String title, String contents, String userName) {
+    public CreateTodoRequestDto(String title, String contents, Long userId) {
         this.title = title;
         this.contents = contents;
-        this.userName = userName;
+        this.userId = userId;
     }
 }

@@ -1,9 +1,6 @@
 package com.example.tododevelop.users.controller;
 
-import com.example.tododevelop.users.dto.SignUpRequestDto;
-import com.example.tododevelop.users.dto.SignUpResponseDto;
-import com.example.tododevelop.users.dto.UpdatePasswordRequstDto;
-import com.example.tododevelop.users.dto.UsersResponseDto;
+import com.example.tododevelop.users.dto.*;
 import com.example.tododevelop.users.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +24,12 @@ public class UsersController {
                         requestDto.getUserPassword()
                 );
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.OK);
+    }
+
+    // 유저 로그인
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@RequestBody LoginRequestDto loginRequestDto) {
+        userService.
     }
 
     //특정 유저 조회

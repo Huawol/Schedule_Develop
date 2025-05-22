@@ -9,16 +9,16 @@ import java.util.Optional;
 
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
-    Optional<Users> findUsersByUserName(String username);
+    Optional<Users> findUsersByUserEmail(String userEmail);
 
-    default Users findUsersByUserNameOrElseTrow(String username) {
-        return findUsersByUserName(username)
+    // 없으면 바로 에러 투척
+    default Users findUsersByUserEmailOrElseTrow(String userEmail) {
+        return findUsersByUserEmail(userEmail)
                 .orElseThrow(() ->
                         new ResponseStatusException(
                                 HttpStatus.NOT_FOUND
                         )
                 );
-
     }
 
     default Users findByIdOrElseThrow(Long id) {

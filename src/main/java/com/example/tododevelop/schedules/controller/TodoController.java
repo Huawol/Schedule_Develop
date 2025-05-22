@@ -3,6 +3,7 @@ package com.example.tododevelop.schedules.controller;
 
 import com.example.tododevelop.schedules.dto.CreateTodoRequestDto;
 import com.example.tododevelop.schedules.dto.TodoResponseDto;
+import com.example.tododevelop.schedules.dto.UpdateContentsRequstDto;
 import com.example.tododevelop.schedules.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class TodoController {
                 todoService.save(
                         requestDto.getTitle(),
                         requestDto.getContents(),
-                        requestDto.getUserName() /* post맨에서 회원 생성할때 만든 username이랑 같아야함*/
+                        requestDto.getUserId() /* post맨에서 회원 생성할때 만든 username이랑 같아야함*/
                 );
         return new ResponseEntity<>(todoResponseDto, HttpStatus.CREATED);
     }
@@ -42,6 +43,16 @@ public class TodoController {
     @GetMapping("/{id}")
     public ResponseEntity<TodoResponseDto> findById(@PathVariable Long id) {
         TodoResponseDto todoResponseDto = todoService.findById(id);
+        return new ResponseEntity<>(todoResponseDto, HttpStatus.OK);
+    }
+
+    // 게시글 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<TodoResponseDto> updateTodo(
+            @PathVariable Long id,
+            @RequestBody UpdateContentsRequstDto contentsRequstDto
+    ) {
+        TodoResponseDto todoResponseDto = todoService.updateTodo(id, contentsRequstDto.getNewContents());
         return new ResponseEntity<>(todoResponseDto, HttpStatus.OK);
     }
 
