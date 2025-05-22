@@ -58,7 +58,11 @@ public class UserService {
     }
 
     // 로그인 인증
-    public void login(LoginRequestDto loginRequestDto) {
-        Optional<Users> userEmail = usersRepository.findUsersByUserEmail(loginRequestDto.getUserEmail());
+    public UsersResponseDto login(LoginRequestDto loginRequestDto) {
+        Users finduser = usersRepository.findUsersByUserEmailOrElseTrow(loginRequestDto.getUserEmail());
+        if(!loginRequestDto.getUserPassword().equals(finduser.getUserPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+        return new UsersResponseDto(finduser);
     }
 }

@@ -21,7 +21,9 @@ public class TodoController {
 
     // 게시글 생성
     @PostMapping("/post")
-    public ResponseEntity<TodoResponseDto> save(@RequestBody CreateTodoRequestDto requestDto) {
+    public ResponseEntity<TodoResponseDto> save(
+            @RequestBody CreateTodoRequestDto requestDto) {
+
         TodoResponseDto todoResponseDto =
                 todoService.save(
                         requestDto.getTitle(),
