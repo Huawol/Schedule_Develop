@@ -2,6 +2,7 @@ package com.example.tododevelop.schedules.dto;
 
 import com.example.tododevelop.schedules.entity.Todo;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

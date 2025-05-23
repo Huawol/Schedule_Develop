@@ -3,9 +3,11 @@ package com.example.tododevelop.schedules.entity;
 import com.example.tododevelop.entity.BaseEntity;
 import com.example.tododevelop.users.entity.Users;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Range;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Entity

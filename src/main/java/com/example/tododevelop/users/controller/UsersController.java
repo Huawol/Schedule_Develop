@@ -3,9 +3,11 @@ package com.example.tododevelop.users.controller;
 import com.example.tododevelop.users.dto.*;
 import com.example.tododevelop.users.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +19,7 @@ public class UsersController {
 
     // 유저 생성
     @PostMapping("/signUp")
-    public ResponseEntity<SignUpResponseDto> signup(@RequestBody SignUpRequestDto requestDto) {
+    public ResponseEntity<SignUpResponseDto> signup(@RequestBody @Validated SignUpRequestDto requestDto) {
         SignUpResponseDto signUpResponseDto =
                 userService.signUp(
                         requestDto.getUserName(),
@@ -29,7 +31,7 @@ public class UsersController {
 
     // 유저 로그인
     @PostMapping("/login")
-    public ResponseEntity<Void> login(HttpSession session, @RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<Void> login(HttpSession session, @RequestBody @Valid LoginRequestDto loginRequestDto) {
         UsersResponseDto login = userService.login(loginRequestDto);
         session.setAttribute("userEmail",login.getUserEmail());
         return new ResponseEntity<>(HttpStatus.OK);
